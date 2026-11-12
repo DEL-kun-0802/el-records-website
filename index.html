@@ -1,133 +1,754 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#090607">
-  <meta name="description" content="EL Records — The Abyss Rises. Independent music from DEL-kun and beyond.">
-  <title>EL RECORDS — THE ABYSS RISES</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090709">
+  <meta name="description" content="EL Records — the independent world of DEL-kun. Explore albums, EPs and singles. The Abyss Rises.">
+  <title>EL Records — DEL-kun</title>
+  <style>
+    :root {
+      --bg: #090709;
+      --bg-soft: #110c10;
+      --panel: #171015;
+      --panel-2: #20131a;
+      --red: #a51f3a;
+      --red-bright: #d12d4e;
+      --red-dim: #5c1829;
+      --text: #f4edf0;
+      --muted: #b6a7ae;
+      --line: rgba(210, 45, 78, .24);
+      --max: 1180px;
+      --radius: 18px;
+      --shadow: 0 22px 70px rgba(0,0,0,.38);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 50% -15%, rgba(165,31,58,.24), transparent 42%),
+        radial-gradient(ellipse at 100% 48%, rgba(91,20,42,.12), transparent 32%),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    img { display: block; max-width: 100%; }
+    .wrap { width: min(var(--max), calc(100% - 40px)); margin-inline: auto; }
+    .eyebrow {
+      color: #e46b83;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+    .muted { color: var(--muted); }
+    .section { padding: 82px 0; scroll-margin-top: 78px; }
+    .section-heading { margin-bottom: 28px; }
+    .section-heading h2 {
+      margin: 7px 0 8px;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.05;
+      letter-spacing: -.045em;
+    }
+    .section-heading p { max-width: 680px; margin: 0; color: var(--muted); }
+
+    /* Navigation */
+    .topbar {
+      position: sticky;
+      z-index: 20;
+      top: 0;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      background: rgba(9,7,9,.88);
+      backdrop-filter: blur(16px);
+    }
+    .nav {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: .12em;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 36px; height: 36px;
+      display: grid; place-items: center;
+      border: 1px solid var(--red-bright);
+      border-radius: 50%;
+      color: #fff;
+      box-shadow: 0 0 22px rgba(209,45,78,.22), inset 0 0 16px rgba(209,45,78,.14);
+      font-family: Georgia, serif;
+      font-size: 1.05rem;
+    }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 20px; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* Hero */
+    .hero {
+      min-height: 590px;
+      display: grid;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(9,7,9,.97) 0%, rgba(9,7,9,.76) 52%, rgba(9,7,9,.4) 100%),
+        radial-gradient(ellipse at 78% 48%, rgba(165,31,58,.34), transparent 43%);
+    }
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      border: 1px solid rgba(209,45,78,.18);
+      border-radius: 50%;
+      width: 460px; height: 460px;
+      right: 4%; top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 0 100px rgba(165,31,58,.12), inset 0 0 80px rgba(165,31,58,.08);
+    }
+    .hero::after { width: 330px; height: 330px; right: calc(4% + 65px); }
+    .hero-content { position: relative; z-index: 1; padding: 92px 0 104px; }
+    .hero h1 {
+      max-width: 800px;
+      margin: 16px 0 14px;
+      font-size: clamp(3.3rem, 10vw, 7.8rem);
+      line-height: .88;
+      letter-spacing: -.075em;
+      text-transform: uppercase;
+      text-shadow: 0 8px 50px rgba(0,0,0,.5);
+    }
+    .hero h1 span { color: var(--red-bright); }
+    .hero-sub {
+      max-width: 560px;
+      margin: 22px 0 30px;
+      color: #d0c1c7;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 19px;
+      border: 1px solid var(--red);
+      border-radius: 999px;
+      background: var(--red);
+      color: #fff;
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-decoration: none;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); background: var(--red-bright); border-color: var(--red-bright); }
+    .btn.secondary { background: transparent; border-color: rgba(255,255,255,.24); }
+    .btn.secondary:hover { border-color: var(--red-bright); background: rgba(165,31,58,.13); }
+
+    /* Identity strip and manifesto */
+    .identity-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      border-bottom: 1px solid var(--line);
+      background: var(--line);
+    }
+    .identity-strip div {
+      padding: 20px 12px;
+      text-align: center;
+      background: #0e0a0d;
+    }
+    .identity-strip strong { display: block; color: #fff; font-size: 1.2rem; }
+    .identity-strip span { color: var(--muted); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
+    .manifesto {
+      padding: 42px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(165,31,58,.13), rgba(23,16,21,.82) 55%);
+      box-shadow: var(--shadow);
+    }
+    .manifesto blockquote {
+      margin: 12px 0 14px;
+      max-width: 850px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      line-height: 1.2;
+    }
+    .manifesto p { max-width: 760px; margin: 0; color: var(--muted); }
+
+    /* Catalogue controls and cards */
+    .catalogue-tools {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 0 0 25px;
+    }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter {
+      padding: 9px 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: .78rem;
+      font-weight: 800;
+    }
+    .filter[aria-pressed="true"], .filter:hover {
+      border-color: var(--red-bright);
+      background: rgba(165,31,58,.18);
+      color: #fff;
+    }
+    .search {
+      width: min(100%, 270px);
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 999px;
+      outline: none;
+      background: #120d11;
+      color: #fff;
+    }
+    .search:focus { border-color: var(--red-bright); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .release-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: var(--radius);
+      background: linear-gradient(160deg, #1b1117, #100c10 70%);
+      box-shadow: 0 14px 40px rgba(0,0,0,.22);
+      transition: transform .22s ease, border-color .22s ease;
+    }
+    .release-card:hover { transform: translateY(-5px); border-color: rgba(209,45,78,.55); }
+    .cover-wrap { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: #21141b; }
+    .cover-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .release-card:hover .cover-wrap img { transform: scale(1.035); }
+    .cover-fallback {
+      width: 100%; height: 100%; display: grid; place-items: center;
+      padding: 24px; text-align: center;
+      color: #f4dce3; background: radial-gradient(circle, #5a172b, #130d12 68%);
+      font-family: Georgia, serif; font-size: 1.4rem; letter-spacing: .08em;
+    }
+    .type-pill {
+      position: absolute; left: 13px; top: 13px;
+      padding: 6px 10px; border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px; background: rgba(8,6,8,.78);
+      color: #fff; font-size: .65rem; font-weight: 900; letter-spacing: .12em;
+      text-transform: uppercase; backdrop-filter: blur(8px);
+    }
+    .card-body { padding: 18px; }
+    .card-title { margin: 0 0 5px; font-size: 1.1rem; line-height: 1.2; }
+    .card-subtitle { margin: 0 0 14px; color: var(--muted); font-size: .78rem; }
+    .track-details {
+      margin: 0 0 15px;
+      padding: 12px 0 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .track-details summary {
+      color: #e7b2bf; cursor: pointer; font-size: .76rem; font-weight: 800;
+      list-style-position: inside;
+    }
+    .track-list { margin: 10px 0 0; padding-left: 22px; color: #c9bbc1; font-size: .78rem; }
+    .track-list li { padding: 2px 0 2px 3px; }
+    .bonus { color: #e88ba0; }
+    .card-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .card-links a {
+      color: #fff; text-decoration: none; font-size: .72rem; font-weight: 800;
+      padding: 8px 11px; border: 1px solid rgba(209,45,78,.45); border-radius: 999px;
+    }
+    .card-links a:hover { background: rgba(165,31,58,.2); }
+    .empty { display: none; padding: 24px; color: var(--muted); text-align: center; border: 1px dashed var(--line); border-radius: var(--radius); }
+
+    /* Other sections */
+    .artist-panel, .downloads-panel {
+      padding: clamp(24px, 5vw, 44px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(165,31,58,.12), rgba(20,13,18,.95) 60%);
+    }
+    .artist-panel h2, .downloads-panel h2 { margin: 8px 0 12px; font-size: clamp(1.8rem, 4vw, 2.7rem); }
+    .artist-panel p, .downloads-panel p { max-width: 760px; color: var(--muted); }
+    .download-note {
+      margin-top: 20px; padding: 15px 17px; border-left: 3px solid var(--red-bright);
+      background: rgba(0,0,0,.22); color: #d7cbd0; font-size: .88rem;
+    }
+    footer { padding: 34px 0 42px; border-top: 1px solid var(--line); color: var(--muted); }
+    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; align-items: center; }
+    .footer-inner p { margin: 0; font-size: .78rem; }
+    .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); font-size: .78rem; text-decoration: none; }
+    .footer-links a:hover { color: #fff; }
+    .hidden { display: none !important; }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero::before { right: -160px; }
+      .hero::after { right: -95px; }
+    }
+    @media (max-width: 620px) {
+      .wrap { width: min(var(--max), calc(100% - 28px)); }
+      .nav { align-items: flex-start; flex-direction: column; padding: 13px 0; gap: 10px; }
+      .nav-links { gap: 13px; }
+      .nav-links a { font-size: .74rem; }
+      .hero { min-height: 520px; }
+      .hero-content { padding: 75px 0; }
+      .hero::before { width: 310px; height: 310px; right: -175px; }
+      .hero::after { width: 220px; height: 220px; right: -130px; }
+      .identity-strip { grid-template-columns: 1fr; }
+      .identity-strip div { padding: 13px; }
+      .manifesto { padding: 25px; }
+      .section { padding: 62px 0; }
+      .grid { grid-template-columns: 1fr; gap: 17px; }
+      .release-card { display: grid; grid-template-columns: 112px minmax(0,1fr); }
+      .cover-wrap { height: 100%; min-height: 112px; aspect-ratio: auto; }
+      .type-pill { left: 7px; top: 7px; font-size: .55rem; padding: 4px 7px; }
+      .card-body { padding: 13px; }
+      .card-title { font-size: .98rem; }
+      .track-details { padding-top: 8px; }
+      .track-list { font-size: .72rem; }
+      .card-links a { font-size: .66rem; padding: 7px 9px; }
+      .search { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
   <header class="topbar">
-    <a class="wordmark" href="#home" aria-label="EL Records home"><span class="sigil">E<span>L</span></span><span>EL RECORDS</span></a>
-    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
-    <nav class="nav">
-      <a href="#manifesto">THE LABEL</a>
-      <a href="#artists">ARTISTS</a>
-      <a href="#releases">RELEASES</a>
-      <a href="#downloads">DOWNLOADS</a>
-    </nav>
+    <div class="wrap nav">
+      <a class="brand" href="#home" aria-label="EL Records home">
+        <span class="brand-mark">EL</span>
+        <span>EL RECORDS</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#manifesto">Identity</a>
+        <a href="#catalogue">Catalogue</a>
+        <a href="#artist">DEL-kun</a>
+        <a href="#downloads">Downloads</a>
+      </nav>
+    </div>
   </header>
 
-  <main id="home">
-    <section class="hero">
-      <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
-      <div class="hero-content">
-        <p class="eyebrow"><span class="red-line"></span> INDEPENDENT MUSIC · SWITZERLAND</p>
-        <div class="crest" aria-label="EL insignia"><span>ＥＬ</span><i></i></div>
-        <h1>THE ABYSS<br><em>RISES</em></h1>
-        <p class="hero-sub">A world beyond the surface.<br>Music without borders. Stories without permission.</p>
-        <a class="cta" href="#releases">ENTER THE WORLD <b>↘</b></a>
-      </div>
-      <div class="hero-footer"><span>EST. IN INDEPENDENCE</span><span>CH · MMXXVI</span></div>
-      <div class="vertical-note">EL RECORDS — AN INDEPENDENT CREATIVE HOUSE</div>
-    </section>
-
-    <section class="manifesto section" id="manifesto">
-      <p class="eyebrow">01 / THE LABEL</p>
-      <div class="manifesto-grid">
-        <h2>NOT MADE<br>TO <em>FIT IN.</em></h2>
-        <div class="manifesto-copy">
-          <p class="lead">EL Records is an independent creative home for music, visual worlds and stories that refuse to stay inside the lines.</p>
-          <p>Built around artistic freedom and the belief that music should be experienced, not explained. Every release opens a door. Every world has its own language.</p>
-          <div class="signature">THE ABYSS RISES <span>✳</span></div>
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-content">
+        <div class="eyebrow">An independent music world</div>
+        <h1>The Abyss<br><span>Rises.</span></h1>
+        <p class="hero-sub">Enter the world of DEL-kun. A catalogue of sound, shadows, stories and different realities — each release its own door.</p>
+        <div class="actions">
+          <a class="btn" href="#catalogue">Explore the catalogue</a>
+          <a class="btn secondary" href="https://open.spotify.com/artist/5to7" target="_blank" rel="noopener noreferrer">Listen on Spotify ↗</a>
         </div>
       </div>
     </section>
 
-    <section class="artist section" id="artists">
-      <div class="section-head"><p class="eyebrow">02 / THE ARTIST</p><span class="index">001 — DEL-kun</span></div>
-      <div class="artist-panel">
-        <div class="artist-mark">DEL<span>-kun</span></div>
-        <div class="artist-text">
-          <p class="eyebrow">FIRST SIGNAL · EL RECORDS</p>
-          <h2>ENTER THE<br><em>ALT WORLD.</em></h2>
-          <p>Music as storytelling. Vocals as instruments. An evolving universe shaped by sound, emotion and imagination.</p>
-          <a class="text-link" href="https://open.spotify.com/artist/5to7" target="_blank" rel="noreferrer">LISTEN TO DEL-kun ↗</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="releases section" id="releases">
-      <div class="section-head"><p class="eyebrow">03 / THE CATALOGUE</p><span class="index">SOUND ARCHIVE</span></div>
-      <h2 class="section-title">SELECTED <em>WORLDS</em></h2>
-      <div class="release-grid"> 
-        <article class="release-card featured">
-          <div class="cover cover-ech"><span class="cover-small">DEL-kun · ALBUM</span><strong>ECHOLUMEN</strong><span class="cover-bottom">THE DESCENT / THE RETURN</span></div>
-          <div class="release-meta"><div><h3>ECHOLUMEN</h3><p>Album · DEL-kun</p></div><span class="status">UPCOMING / UPDATE STATUS</span></div>
-        </article>
-        <article class="release-card">
-          <div class="cover cover-intox"><span class="cover-small">DEL-kun · ALBUM</span><strong>INTOXI<br>CATION</strong><span class="cover-bottom">AFTER THE FALL</span></div>
-          <div class="release-meta"><div><h3>INTOXICATION</h3><p>Album · DEL-kun</p></div><span class="status">RELEASED</span></div>
-        </article>
-        
-<article class="release-card">
-  <a href="https://open.spotify.com/album/6HaN1j8YHGqflzEq0znG8l"
-     target="_blank" rel="noopener noreferrer">
-    <img
-      src="assets/ab67616d00001e026bf9103500de9f9c5b91e6a2.jpeg"
-      alt="Licht n SCHATTEN (Alt World) album artwork"
-      style="width:100%; aspect-ratio:1; object-fit:cover; display:block;"
-    >
-  </a>
-
-  <div class="release-meta">
-    <div>
-      <h3>LICHT N SCHATTEN</h3>
-      <p>ALT WORLD · DEL-kun</p>
+    <div class="identity-strip" aria-label="Label identity">
+      <div><strong>EL RECORDS</strong><span>Independent identity</span></div>
+      <div><strong>DEL-kun</strong><span>Artist catalogue</span></div>
+      <div><strong>THE ABYSS RISES</strong><span>Enter the Alt World</span></div>
     </div>
-    <span class="status">EXPLORE</span>
-  </div>
 
-  <p>Enter the Alt World. Explore all 22 tracks.</p>
-
-  <a href="https://open.spotify.com/album/6HaN1j8YHGqflzEq0znG8l"
-     target="_blank" rel="noopener noreferrer">
-    LISTEN ON SPOTIFY ↗
-  </a>
-</article>
-
+    <section class="section" id="manifesto">
+      <div class="wrap">
+        <div class="manifesto">
+          <div class="eyebrow">The EL Records identity</div>
+          <blockquote>“The music is the story. The vocals are the instruments.”</blockquote>
+          <p>EL Records is a home for music that invites discovery. The sound, the atmosphere and the listener's own interpretation come first. No explanation is required before entering the world.</p>
+        </div>
       </div>
-      <p class="micro-note">Release artwork and links are placeholders in this first edition. Replace them with approved assets and official release links before launch.</p>
     </section>
 
-    <section class="downloads section" id="downloads">
-      <div class="section-head"><p class="eyebrow">04 / OPEN ARCHIVE</p><span class="index">LISTEN · KEEP · RETURN</span></div>
-      <div class="download-band">
-        <div><h2>MUSIC SHOULD<br>TRAVEL <em>FREELY.</em></h2><p>Selected releases may be made available here as free downloads, with full credits and artwork.</p></div>
-        <div class="download-action"><span class="lock-mark">✳</span><p>THE DOWNLOAD ARCHIVE<br><small>NO FILES PUBLISHED YET</small></p><span class="coming">OPENING SOON</span></div>
+    <section class="section" id="catalogue">
+      <div class="wrap">
+        <div class="section-heading">
+          <div class="eyebrow">The public discography</div>
+          <h2>The Catalogue</h2>
+          <p>Albums, EPs and singles released by DEL-kun. Select a category or search for a title to explore the archive.</p>
+        </div>
+
+        <div class="catalogue-tools">
+          <div class="filters" role="group" aria-label="Filter releases">
+            <button class="filter" type="button" data-filter="all" aria-pressed="true">All releases</button>
+            <button class="filter" type="button" data-filter="album" aria-pressed="false">Albums</button>
+            <button class="filter" type="button" data-filter="ep" aria-pressed="false">EPs</button>
+            <button class="filter" type="button" data-filter="single" aria-pressed="false">Singles</button>
+          </div>
+          <input class="search" id="releaseSearch" type="search" placeholder="Search the catalogue..." aria-label="Search releases">
+        </div>
+
+        <div class="grid" id="releaseGrid">
+          <!-- ALBUMS -->
+          <article class="release-card" data-type="album" data-search="intoxication album del-kun">
+            <div class="cover-wrap">
+              <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02e9c53e217771f11f1a321cb0" alt="INTOXICATION album artwork" loading="lazy">
+              <span class="type-pill">Album</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">INTOXICATION</h3>
+              <p class="card-subtitle">DEL-kun · 10 tracks</p>
+              <details class="track-details">
+                <summary>View tracklist</summary>
+                <ol class="track-list">
+                  <li>INTOXICATION</li><li>Lost World</li><li>Skyscraper</li><li>The 7th Eye</li><li>Impersonation</li>
+                  <li>Soul City</li><li>Interlude (Story Time)</li><li>The Night Rages In</li><li>The Route</li><li>The Final Message</li>
+                </ol>
+              </details>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/7z7nK6fEQHTbTR79eeWQHg" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/7z7nK6fEQHTbTR79eeWQHg" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="album" data-search="licht n schatten alt world licht schatten instrumental album">
+            <div class="cover-wrap">
+              <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e026bf9103500de9f9c5b91e6a2" alt="LICHT N SCHATTEN (ALT WORLD) album artwork" loading="lazy">
+              <span class="type-pill">Album</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">LICHT N SCHATTEN (ALT WORLD)</h3>
+              <p class="card-subtitle">DEL-kun · 22 tracks</p>
+              <details class="track-details">
+                <summary>View tracklist</summary>
+                <ol class="track-list">
+                  <li>SCHATTEN</li><li>Come And Torment Me</li><li>LONLINESS</li><li>In Darkness</li><li>Losing Myself</li>
+                  <li>Lusty Desires</li><li>FAKES</li><li>Let Me Die</li><li>Close Death</li><li>Another Dream</li>
+                  <li>One Sided</li><li>TEXTS</li><li>Lonely Princess</li><li>Lonely Prince</li><li>No Love</li>
+                  <li>Dark Surgeon</li><li>Acceptance</li><li>Midnight Dance</li><li>Memories</li><li>Resolution (Licht)</li>
+                  <li>Melancholy Melody</li><li>Light in The Shadows (Alt World)</li>
+                </ol>
+              </details>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/6HaN1j8YHGqflzEq0znG8l" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/6HaN1j8YHGqflzEq0znG8l" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- EPS -->
+          <article class="release-card" data-type="ep" data-search="licht n schatten vocal realms ep">
+            <div class="cover-wrap">
+              <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02153704a6643b835979b8c050" alt="LICHT N SCHATTEN — VOCAL REALMS EP artwork" loading="lazy">
+              <span class="type-pill">EP</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">LICHT N SCHATTEN — VOCAL REALMS</h3>
+              <p class="card-subtitle">DEL-kun · 4 tracks</p>
+              <details class="track-details"><summary>View tracklist</summary>
+                <ol class="track-list"><li>SCHATTEN</li><li>Come And Torment Me</li><li>Loneliness</li><li>Resolution (Licht)</li></ol>
+              </details>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/0Qgsxgs5gwFKFobK5LoOfJ" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/0Qgsxgs5gwFKFobK5LoOfJ" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="ep" data-search="in darkness ep">
+            <div class="cover-wrap">
+              <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f209e4bf84f8ced139be957c" alt="IN DARKNESS EP artwork" loading="lazy">
+              <span class="type-pill">EP</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">IN DARKNESS</h3>
+              <p class="card-subtitle">DEL-kun · 5 tracks</p>
+              <details class="track-details"><summary>View tracklist</summary>
+                <ol class="track-list"><li>In Darkness</li><li>Losing Myself</li><li>Lusty Desires</li><li>FAKES</li><li>Let Me Die</li></ol>
+              </details>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/1P3vuydgRHBQS5gkzlbOe7" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/1P3vuydgRHBQS5gkzlbOe7" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="ep" data-search="closed dreams ep">
+            <div class="cover-wrap">
+              <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02fa0f6180fdb13e5375d42cab" alt="CLOSED DREAMS EP artwork" loading="lazy">
+              <span class="type-pill">EP</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">CLOSED DREAMS</h3>
+              <p class="card-subtitle">DEL-kun · 5 tracks</p>
+              <details class="track-details"><summary>View tracklist</summary>
+                <ol class="track-list"><li>Close Death</li><li>Another Dream</li><li>One Sided</li><li>TEXTS</li><li class="bonus">Her Spell (Bonus Track)</li></ol>
+              </details>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/5Qgz2gBBy7L20YbPGTJ8rJ" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/5Qgz2gBBy7L20YbPGTJ8rJ" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="ep" data-search="lost lovers ep">
+            <div class="cover-wrap">
+              <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02caaf4196ddcdca85ed3b661b" alt="LOST LOVERS EP artwork" loading="lazy">
+              <span class="type-pill">EP</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">LOST LOVERS</h3>
+              <p class="card-subtitle">DEL-kun · 5 tracks</p>
+              <details class="track-details"><summary>View tracklist</summary>
+                <ol class="track-list"><li>Lonely Princess</li><li>Lonely Prince</li><li>No Love</li><li>Dark Surgeon</li><li class="bonus">Joker (Bonus Track)</li></ol>
+              </details>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/6NkeecgVOuGd5hOlWPvaL5" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/6NkeecgVOuGd5hOlWPvaL5" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="ep" data-search="fractured memory ep">
+            <div class="cover-wrap">
+              <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02051f7bd822093ce8339d0377" alt="FRACTURED MEMORY EP artwork" loading="lazy">
+              <span class="type-pill">EP</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">FRACTURED MEMORY</h3>
+              <p class="card-subtitle">DEL-kun · 6 tracks</p>
+              <details class="track-details"><summary>View tracklist</summary>
+                <ol class="track-list"><li>Acceptance</li><li>Midnight Dance</li><li>Memories</li><li>Melancholy Melody</li><li>Light in The Shadows</li><li class="bonus">Fractured (Bonus Track)</li></ol>
+              </details>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/5vHpTpuIRf0MRxHBANdEKQ" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/5vHpTpuIRf0MRxHBANdEKQ" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="ep" data-search="night waves ep">
+            <div class="cover-wrap">
+              <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0220b0f91a31d6b5c3ca4bcdc1" alt="NIGHT WAVES EP artwork" loading="lazy">
+              <span class="type-pill">EP</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">NIGHT WAVES EP</h3>
+              <p class="card-subtitle">DEL-kun · 3 tracks</p>
+              <details class="track-details"><summary>View tracklist</summary>
+                <ol class="track-list"><li>Night Waves</li><li>Night Waves Acoustics</li><li>Night Waves ACAPELLA</li></ol>
+              </details>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/2LNk0emnCGiru0NaakzE59" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/2LNk0emnCGiru0NaakzE59" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- SINGLES -->
+          <article class="release-card" data-type="single" data-search="final message single">
+            <div class="cover-wrap"><img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0273fb5ec6c511578e1548e87d" alt="FINAL MESSAGE single artwork" loading="lazy"><span class="type-pill">Single</span></div>
+            <div class="card-body"><h3 class="card-title">FINAL MESSAGE</h3><p class="card-subtitle">DEL-kun · Single</p>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/3eZgMgRIwM1BDm6i9Ym4BW" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/3eZgMgRIwM1BDm6i9Ym4BW" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="single" data-search="lost grave single">
+            <div class="cover-wrap"><img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f3c64bebc944b956d9ece88c" alt="LOST GRAVE single artwork" loading="lazy"><span class="type-pill">Single</span></div>
+            <div class="card-body"><h3 class="card-title">LOST GRAVE</h3><p class="card-subtitle">DEL-kun · Single</p>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/4ybc2sGsHTNjK8wlgYcFdZ" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/4ybc2sGsHTNjK8wlgYcFdZ" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="single" data-search="era single">
+            <div class="cover-wrap"><img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02282f9aa9a0970b8d741d50cc" alt="ERA single artwork" loading="lazy"><span class="type-pill">Single</span></div>
+            <div class="card-body"><h3 class="card-title">ERA</h3><p class="card-subtitle">DEL-kun · Single</p>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/1tvVw4Kr3gwDJNKjRErnGW" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/1tvVw4Kr3gwDJNKjRErnGW" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="single" data-search="tower of power single">
+            <div class="cover-wrap"><img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02d8ad163312609fe3e4a468a6" alt="TOWER OF POWER single artwork" loading="lazy"><span class="type-pill">Single</span></div>
+            <div class="card-body"><h3 class="card-title">TOWER OF POWER</h3><p class="card-subtitle">DEL-kun · Single</p>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/2YwCbReT7cp5klRoth5AV5" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/2YwCbReT7cp5klRoth5AV5" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="single" data-search="the seventh eye single seventh eye">
+            <div class="cover-wrap"><img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02ebd7e4dee165fc905af43fd3" alt="THE SEVENTH EYE single artwork" loading="lazy"><span class="type-pill">Single</span></div>
+            <div class="card-body"><h3 class="card-title">THE SEVENTH EYE</h3><p class="card-subtitle">DEL-kun · Single</p>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/5w20vzOqY7SeWftf0ODGHC" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/5w20vzOqY7SeWftf0ODGHC" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="single" data-search="ray of hope single">
+            <div class="cover-wrap"><img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0249e7a72d4421e62a7080eea4" alt="RAY OF HOPE single artwork" loading="lazy"><span class="type-pill">Single</span></div>
+            <div class="card-body"><h3 class="card-title">RAY OF HOPE</h3><p class="card-subtitle">DEL-kun · Single</p>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/2vakiiPSEmfTjPnpMmKgCl" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/2vakiiPSEmfTjPnpMmKgCl" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="single" data-search="impersonation single">
+            <div class="cover-wrap"><img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02d6e6c4332bb1afaeb7a03640" alt="IMPERSONATION single artwork" loading="lazy"><span class="type-pill">Single</span></div>
+            <div class="card-body"><h3 class="card-title">IMPERSONATION</h3><p class="card-subtitle">DEL-kun · Single</p>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/70pjkokx35w6QnWTHCXpqS" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/70pjkokx35w6QnWTHCXpqS" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="single" data-search="intoxication single standalone">
+            <div class="cover-wrap"><img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0221feb16d5e041ff6ec1f88e2" alt="INTOXICATION standalone single artwork" loading="lazy"><span class="type-pill">Single</span></div>
+            <div class="card-body"><h3 class="card-title">INTOXICATION</h3><p class="card-subtitle">DEL-kun · Standalone single</p>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/4HEuM706UbJi04so4mmgSK" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/4HEuM706UbJi04so4mmgSK" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="single" data-search="soul city radio edit single">
+            <div class="cover-wrap"><img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0264fe2cac1b2196d259a4e297" alt="SOUL CITY (RADIO EDIT) single artwork" loading="lazy"><span class="type-pill">Single</span></div>
+            <div class="card-body"><h3 class="card-title">SOUL CITY (RADIO EDIT)</h3><p class="card-subtitle">DEL-kun · Single</p>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/441mCnLvAmsvbiKA435SEm" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/441mCnLvAmsvbiKA435SEm" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="release-card" data-type="single" data-search="moth to a flame cover the weeknd swedish house mafia single">
+            <div class="cover-wrap"><img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e025a49dcd067d98c94274a8fcc" alt="MOTH TO A FLAME (COVER) single artwork" loading="lazy"><span class="type-pill">Cover single</span></div>
+            <div class="card-body"><h3 class="card-title">MOTH TO A FLAME (COVER)</h3><p class="card-subtitle">DEL-kun · Cover single</p>
+              <div class="card-links">
+                <a href="https://open.spotify.com/album/2zX5HhdrJMtWdELd4ldZCs" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+                <a href="https://open.spotify.com/oembed?url=https://open.spotify.com/album/2zX5HhdrJMtWdELd4ldZCs" target="_blank" rel="noopener noreferrer">Metadata ↗</a>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="empty" id="emptyState">No releases match that search. Try another title or category.</div>
       </div>
-      <p class="micro-note">Only recordings with the necessary distribution and download rights will be offered here. Cover recordings require separate rights clearance for free downloads.</p>
     </section>
 
-    <section class="contact section">
-      <p class="eyebrow">THE NEXT CHAPTER</p>
-      <h2>THE DOOR<br>IS <em>OPEN.</em></h2>
-      <p>Independent by nature. Limitless by design.</p>
-      <a class="cta" href="https://www.instagram.com/" target="_blank" rel="noreferrer">FOLLOW THE SIGNAL ↗</a>
+    <section class="section" id="artist">
+      <div class="wrap">
+        <div class="artist-panel">
+          <div class="eyebrow">The artist</div>
+          <h2>DEL-kun</h2>
+          <p>Explore the releases, follow the threads between projects, and make your own way through the music. The catalogue is the map; the listening experience is yours.</p>
+          <div class="actions">
+            <a class="btn" href="https://open.spotify.com/artist/5to7" target="_blank" rel="noopener noreferrer">DEL-kun on Spotify ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="downloads">
+      <div class="wrap">
+        <div class="downloads-panel">
+          <div class="eyebrow">Downloads</div>
+          <h2>Take only what is authorised.</h2>
+          <p>This section is reserved for files and materials that EL Records / DEL-kun owns or has permission to distribute. No music downloads are being offered here at this time.</p>
+          <div class="download-note">Release availability and streaming links are provided through the official platforms. Please do not redistribute artwork, audio or other materials without the relevant rights or permission.</div>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <a class="wordmark" href="#home"><span class="sigil">E<span>L</span></span><span>EL RECORDS</span></a>
-    <span>© 2026 EL RECORDS · SWITZERLAND</span>
-    <a href="#home">BACK TO THE SURFACE ↑</a>
+  <footer>
+    <div class="wrap footer-inner">
+      <p>© <span id="year"></span> EL Records · DEL-kun. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#home">Back to top ↑</a>
+        <a href="https://open.spotify.com/artist/5to7" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+      </div>
+    </div>
   </footer>
-  <script src="script.js"></script>
+
+  <script>
+    (() => {
+      const cards = Array.from(document.querySelectorAll(".release-card"));
+      const filterButtons = Array.from(document.querySelectorAll(".filter"));
+      const searchInput = document.getElementById("releaseSearch");
+      const emptyState = document.getElementById("emptyState");
+      let activeFilter = "all";
+
+      function updateCatalogue() {
+        const query = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const matchesType = activeFilter === "all" || card.dataset.type === activeFilter;
+          const searchable = (card.dataset.search + " " + card.innerText).toLowerCase();
+          const matchesSearch = !query || searchable.includes(query);
+          const visible = matchesType && matchesSearch;
+          card.classList.toggle("hidden", !visible);
+          if (visible) visibleCount += 1;
+        });
+
+        emptyState.style.display = visibleCount ? "none" : "block";
+      }
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          activeFilter = button.dataset.filter;
+          filterButtons.forEach((item) => {
+            item.setAttribute("aria-pressed", String(item === button));
+          });
+          updateCatalogue();
+        });
+      });
+
+      searchInput.addEventListener("input", updateCatalogue);
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Replace a missing artwork with a branded local fallback.
+      document.querySelectorAll(".cover-wrap img").forEach((img) => {
+        img.addEventListener("error", () => {
+          const fallback = document.createElement("div");
+          fallback.className = "cover-fallback";
+          fallback.textContent = img.alt.replace(/ artwork$/i, "");
+          img.replaceWith(fallback);
+        }, { once: true });
+      });
+    })();
+  </script>
 </body>
 </html>
